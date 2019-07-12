@@ -1,0 +1,29 @@
+function Get-SplitNames([string]$Name){ 
+    #Instructions
+    <#
+    Insert: $regName = [RegEx]::Escape($VARIABLE)
+        above the function and change VARIABLE
+    Parameter must be RegEx'ed
+    #>
+    
+    #Variables
+    $splitName = $unll
+    $splitName = @()
+    $Name = $null
+    $Domain = $null
+
+    #Edit replace if necessary
+    $splitName= $Name -replace"@\\{DistinguishedName=CN=","" -replace"CN=","" -replace"\\","" -replace"}","" -split",OU=" -split",DC=" 
+    $Name = $splitName[0]
+    $Domain = $splitName[4] + "." + $splitName[5] + "." + $splitName[6]    
+
+    #Example
+    <#
+    $User = Get-ADUser $SAMACCOUNTNAME -Properties * | Select DistinguishedName 
+    $regName = [RegEx]::Escape($User)
+    $User = Get-SplitNames $regName
+    $User
+    #>
+
+    return $Name, $Domain
+}
